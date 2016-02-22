@@ -1,0 +1,74 @@
+<ion-navbar primary *navbar>
+    <ion-title>Angular 2</ion-title>
+</ion-navbar>
+
+<ion-content class="page1">
+    <div [hidden]="!loading" class="sk-fading-circle">
+        <div class="sk-circle1 sk-circle"></div>
+        <div class="sk-circle2 sk-circle"></div>
+        <div class="sk-circle3 sk-circle"></div>
+        <div class="sk-circle4 sk-circle"></div>
+        <div class="sk-circle5 sk-circle"></div>
+        <div class="sk-circle6 sk-circle"></div>
+        <div class="sk-circle7 sk-circle"></div>
+        <div class="sk-circle8 sk-circle"></div>
+        <div class="sk-circle9 sk-circle"></div>
+        <div class="sk-circle10 sk-circle"></div>
+        <div class="sk-circle11 sk-circle"></div>
+        <div class="sk-circle12 sk-circle"></div>
+    </div>
+
+    <ion-card [hidden]="loading">
+         <button (click)="share(homepage)" id="share" clear>
+            <ion-icon name="share"></ion-icon>
+        </button>
+        <img id="angularLogo" src="logo.png"/>
+        <ion-card-header>
+            {{name}}
+        </ion-card-header>
+        <ion-card-content>
+            Angular 2 is a framework to help us build client applications in HTML and TypeScript, JavaScript or Dart.
+        </ion-card-content>
+
+        <ion-item>
+            <button (click)="getContribs()" primary clear item-left>
+                Contributors
+            </button>
+            <a id="homepageLink" item-left [href]=homepage>
+                Homepage
+            </a>
+            <button (click)="showStars()" primary clear item-right>
+                <ion-icon name="star"></ion-icon>
+                <span id="stars">{{stars}}</span>
+            </button>
+        </ion-item>
+    </ion-card>
+
+    <ion-list [hidden]="loading" no-lines>
+        <ion-item *ngFor="#code of codes">
+            <ion-card>
+                <ion-card-header>
+                    {{code.name}}
+                </ion-card-header>
+                <ion-card-content>
+                    <h4>Path: {{code.path}}</h4>
+                </ion-card-content>
+
+                <ion-item>
+                    <a id="linkButton" href={{code.html_url}}>
+                        <button id="seeOnGithub" clear item-left>
+                            See on Github
+                        </button>
+                    </a>
+                    <button (click)="seeCode(code.text_matches)" clear item-right>
+                        Code Snippet
+                    </button>
+                </ion-item>
+            </ion-card>
+        </ion-item>
+    </ion-list>
+</ion-content>
+
+<button (click)="search()" secondary fab fab-bottom fab-right>
+    <ion-icon name="search"></ion-icon>
+</button>
