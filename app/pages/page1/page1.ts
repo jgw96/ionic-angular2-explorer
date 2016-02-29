@@ -72,6 +72,7 @@ export class Page1 {
                         this.http.get(`https://api.github.com/search/code?q=${term}+in:file+language:ts+repo:angular/angular`, { headers })
                             .map(res => res.json())
                             .subscribe(data => {
+                                console.log(data);
                                 this.loading = false;
                                 this.codes = data.items;
                             })
