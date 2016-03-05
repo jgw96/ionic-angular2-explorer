@@ -45,7 +45,7 @@ export class Page1 {
     search(term: string) {
         let prompt = Alert.create({
             title: 'Search',
-            body: "Enter a search term please!",
+            message: "Enter a search term please!",
             inputs: [
                 {
                     name: 'term',
@@ -100,6 +100,16 @@ export class Page1 {
             })
     }
 
+    issues() {
+        this.http.get("https://api.github.com/repos/angular/angular/issues")
+            .map(res => res.json())
+            .subscribe(data => {
+                console.log(data)
+                let modal = Modal.create(IssuesModal, data);
+                this.nav.present(modal);
+            })
+    }
+
     showStars() {
         let modal = Modal.create(StarsModal);
         this.nav.present(modal);
@@ -138,7 +148,7 @@ export class Page1 {
 class ContribsModal {
     public contribs: string;
 
-    constructor(viewCtrl: ViewController) {
+    constructor(public viewCtrl: ViewController) {
         this.viewCtrl = viewCtrl;
         console.log(this.viewCtrl.data);
         this.contribs = this.viewCtrl.data;
@@ -167,7 +177,7 @@ class ContribsModal {
 })
 class MyModal {
     public code: string;
-    constructor(viewCtrl: ViewController) {
+    constructor(public viewCtrl: ViewController) {
         this.viewCtrl = viewCtrl;
         this.code = this.viewCtrl.data;
     }
@@ -216,6 +226,50 @@ class StarsModal {
 
     close() {
         this.viewCtrl.dismiss(null);
+    }
+
+}
+
+@Page({
+    template: `
+    <ion-navbar primary *navbar>
+    <ion-title>Issues</ion-title>
+    <ion-buttons start>
+    <button (click)="close()">
+      <ion-icon name='close'></ion-icon>
+    </button>
+  </ion-buttons>
+  </ion-navbar>
+  <ion-content>
+    <ion-list no-lines>
+      <ion-card *ngFor="#issue of issues">
+        <ion-card-header>{{issue.title}}</ion-card-header>
+        <ion-card-content>{{issue.body}}</ion-card-content>
+        
+        <ion-item>
+        <button clear primary (click)="seeIssue(issue.html_url)" item-right>
+          View on Github
+        </button>
+        </ion-item>
+      </ion-card>
+    </ion-list>
+  </ion-content>`
+})
+class IssuesModal {
+    public issues: string;
+
+    constructor(public viewCtrl: ViewController) {
+        this.viewCtrl = viewCtrl;
+        console.log(this.viewCtrl.data);
+        this.issues = this.viewCtrl.data;
+    }
+    
+    seeIssue(issue: string) {
+        cordova.InAppBrowser.open(issue, "_blank");
+    }
+
+    close() {
+        this.viewCtrl.dismiss();
     }
 
 }

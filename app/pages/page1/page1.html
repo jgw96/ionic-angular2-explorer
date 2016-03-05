@@ -37,6 +37,9 @@
             <a id="homepageLink" item-left [href]=homepage>
                 Homepage
             </a>
+            <button (click)="issues()" primary clear item-left>
+                Issues
+            </button>
             <button (click)="showStars()" primary clear item-right>
                 <ion-icon name="star"></ion-icon>
                 <span id="stars">{{stars}}</span>

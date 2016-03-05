@@ -9,6 +9,18 @@
 
   <link ios-href="build/css/app.ios.css" rel="stylesheet">
   <link md-href="build/css/app.md.css" rel="stylesheet">
+  
+  <script>
+    document.onclick = function (e) {
+        e = e || window.event;
+        var element = e.target || e.srcElement;
+
+        if (element.tagName == 'A') {
+            window.open(element.href, "_blank", "location=yes");
+            return false; // prevent default action and stop event propagation
+        }
+    };
+  </script>
 </head>
 <body>
 
